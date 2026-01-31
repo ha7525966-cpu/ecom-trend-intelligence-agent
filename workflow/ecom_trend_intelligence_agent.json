@@ -1,0 +1,665 @@
+{
+  "name": "“E-Com Trend Intelligence Agent”",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "86687640-35b9-4dea-9146-27e279515407",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -928,
+        -336
+      ],
+      "id": "33445a6c-502e-487b-9b99-60f76082abb7",
+      "name": "Start_Trend_Intelligence_Agent",
+      "webhookId": "86687640-35b9-4dea-9146-27e279515407"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        -336
+      ],
+      "id": "5d28fa40-5a50-4a06-8116-fb76648b7b6f",
+      "name": "Normalize_and_Validate_Input"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -928,
+        -96
+      ],
+      "id": "36ddeeb9-637a-460b-94f0-415bc6c6c8d5",
+      "name": "Discover_Product_Listing_Page"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -736,
+        -96
+      ],
+      "id": "21c0caee-9f38-45fd-8b24-c4325c701c53",
+      "name": "Extract_Product_URLs"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -832,
+        112
+      ],
+      "id": "b29ba683-2d2c-45de-9335-945a2f855409",
+      "name": "Loop_Each_Product"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -480,
+        -336
+      ],
+      "id": "2fb159c8-052d-4b1d-9c17-1ce50a6458a7",
+      "name": "Scrape_Product_Page"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        -336
+      ],
+      "id": "f342f1dc-9387-48a8-80c6-5730dcd07fb0",
+      "name": "Extract_Product_Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -336
+      ],
+      "id": "8625b0e0-e9d5-4a99-8a93-0c0d21d75f61",
+      "name": "Normalize_Product_Signals"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -112
+      ],
+      "id": "24f19b46-c097-45f3-9340-d50f0724a6fd",
+      "name": "Calculate_Engagement_Score"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -288,
+        -112
+      ],
+      "id": "86de11e4-8def-48e9-98d0-1192b3e7d74e",
+      "name": "Trend_Detection_Reasoner_LLM"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -496,
+        128
+      ],
+      "id": "8b5d322f-f678-466b-b6dc-23bca3ff6cd6",
+      "name": "Marketing_Angle_Classifier"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -256,
+        128
+      ],
+      "id": "681cbd4f-6834-4ebf-a01f-06d053b81454",
+      "name": "Target_Audience_Inference"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        128,
+        -336
+      ],
+      "id": "fbc54d0b-bb35-40c0-bd69-0c4d4e338eb3",
+      "name": "Competitor_Overlap_Analyzer"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        368,
+        -336
+      ],
+      "id": "7d6817ea-04ad-4d80-832d-7851f4612a7f",
+      "name": "Monetization_Strategy_Generator"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        80,
+        -64
+      ],
+      "id": "b6f79549-0af1-4dae-bfb0-2f2a477dbc60",
+      "name": "Platform_Hashtag_Strategy"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        320,
+        -64
+      ],
+      "id": "615f945a-d4e4-4419-9c41-f00b702add79",
+      "name": "Copywriting_XRay_Analyzer"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        64,
+        208
+      ],
+      "id": "504e35a8-db00-4627-ac14-0a33bf81af62",
+      "name": "Virality_Score_Estimator"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        304,
+        208
+      ],
+      "id": "13cbc927-e756-4ca6-ae63-7db059cc30b9",
+      "name": "Final_Verdict_Engine"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -64
+      ],
+      "id": "bf26d2bb-9aa6-4fdb-9763-103dca12ad43",
+      "name": "Merge_Final_Trend_Report"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "abbccace-c69b-4f95-8832-05b44af2721c",
+      "name": "Send_Final_Report_to_Client"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        128
+      ],
+      "id": "4d0db804-5aad-4cd0-9a9f-8c7123ecbf1c",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WRs8Zc7NYhPXbe7C",
+          "name": "Google Sheets account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "VIRALITY & DECISION LAYER",
+        "height": 240,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "8eca20c8-0861-4d91-bcbe-d8164492d945",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "content": "CONTENT & CONVERSION OPTIMIZATION LAYER",
+        "height": 240,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "982fb7cd-42f0-49f2-8d98-1e3c770daec2",
+      "name": "Sticky Note22"
+    },
+    {
+      "parameters": {
+        "content": "COMPETITION & MONETIZATION STRATEGY LAYER",
+        "height": 240,
+        "width": 560
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        96,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "77051dc9-aae7-4942-97b4-cea534bd7197",
+      "name": "Sticky Note23"
+    },
+    {
+      "parameters": {
+        "content": "MARKETING & AUDIENCE INTELLIGENCE LAYER",
+        "height": 224,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -528,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "30b8b20b-5004-4300-9b1d-58099997b238",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "content": "ENGAGEMENT & TREND INTELLIGENCE LAYER",
+        "height": 224,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -528,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "8cfdc723-5966-42b4-a31a-001a0d03bd83",
+      "name": "Sticky Note25"
+    },
+    {
+      "parameters": {
+        "content": "DATA EXTRACTION & NORMALIZATION LAYER",
+        "height": 208,
+        "width": 592
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -528,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "bf807229-539c-451b-9f19-0864b09e9fb9",
+      "name": "Sticky Note26"
+    },
+    {
+      "parameters": {
+        "content": "DISCOVERY & CRAWLING LAYER",
+        "height": 400,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1008,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "13b6edb6-61c5-42e8-80dc-9e6901e0d062",
+      "name": "Sticky Note27"
+    },
+    {
+      "parameters": {
+        "content": "INPUT & CONTROL LAYER",
+        "height": 224,
+        "width": 464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1008,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "46301116-e276-4f7a-ac0c-b889611a311c",
+      "name": "Sticky Note28"
+    },
+    {
+      "parameters": {
+        "content": "REPORT ASSEMBLY & DELIVERY LAYER",
+        "height": 400,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        624,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "5d1843db-48dc-47b7-8c40-e2d8fd8d0b9f",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Start_Trend_Intelligence_Agent": {
+      "main": [
+        [
+          {
+            "node": "Normalize_and_Validate_Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize_and_Validate_Input": {
+      "main": [
+        [
+          {
+            "node": "Discover_Product_Listing_Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discover_Product_Listing_Page": {
+      "main": [
+        [
+          {
+            "node": "Extract_Product_URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_Product_URLs": {
+      "main": [
+        [
+          {
+            "node": "Loop_Each_Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop_Each_Product": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Scrape_Product_Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape_Product_Page": {
+      "main": [
+        [
+          {
+            "node": "Extract_Product_Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_Product_Data": {
+      "main": [
+        [
+          {
+            "node": "Normalize_Product_Signals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize_Product_Signals": {
+      "main": [
+        [
+          {
+            "node": "Calculate_Engagement_Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate_Engagement_Score": {
+      "main": [
+        [
+          {
+            "node": "Trend_Detection_Reasoner_LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend_Detection_Reasoner_LLM": {
+      "main": [
+        [
+          {
+            "node": "Marketing_Angle_Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marketing_Angle_Classifier": {
+      "main": [
+        [
+          {
+            "node": "Target_Audience_Inference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Target_Audience_Inference": {
+      "main": [
+        [
+          {
+            "node": "Competitor_Overlap_Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Competitor_Overlap_Analyzer": {
+      "main": [
+        [
+          {
+            "node": "Monetization_Strategy_Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monetization_Strategy_Generator": {
+      "main": [
+        [
+          {
+            "node": "Platform_Hashtag_Strategy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Platform_Hashtag_Strategy": {
+      "main": [
+        [
+          {
+            "node": "Copywriting_XRay_Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copywriting_XRay_Analyzer": {
+      "main": [
+        [
+          {
+            "node": "Virality_Score_Estimator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Virality_Score_Estimator": {
+      "main": [
+        [
+          {
+            "node": "Final_Verdict_Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final_Verdict_Engine": {
+      "main": [
+        [
+          {
+            "node": "Merge_Final_Trend_Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge_Final_Trend_Report": {
+      "main": [
+        [
+          {
+            "node": "Send_Final_Report_to_Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send_Final_Report_to_Client": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "13f2416c-76cb-4fa7-9d70-f5ca56488e04",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5229ad676c3a8d293c6db345f673ae85f2faeec97332d940e6b8ecea4c050d50"
+  },
+  "id": "5KFwXqjNwHTEdVq0",
+  "tags": []
+}
